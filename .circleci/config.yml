@@ -18,8 +18,18 @@ jobs:
         auth:
           username: $AUTH_DOCKER
           password: $PSW_DOCKER  # context / project UI env-var reference
+        environment:
+            TEST_DATABASE_URL: $DATABASE_URL
+
+      # Service container image
+
+      - image: circleci/postgres:9.6.5-alpine-ram
+          auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
     steps:
       - checkout # check out the code in the project directory
+      - run: install postgresql-client-9.6
       - run: yarn install
       - save_cache: 
           key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
