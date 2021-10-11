@@ -23,8 +23,8 @@ jobs:
       - run: yarn install
       - save_cache: 
           key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
-          path: 
-           - ~/yarn
+          paths: 
+           - node_modules
   job2:
     docker:
       - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
