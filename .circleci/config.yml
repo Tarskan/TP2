@@ -16,4 +16,4 @@ jobs:
       - checkout # check out the code in the project directory
       - run: yarn install
       - save_cache: 
-        key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+          key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
