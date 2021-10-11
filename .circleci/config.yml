@@ -6,9 +6,9 @@ workflows:
       - job2:
           requires:
             - build
-      # - job3:
-      #     requires:
-      #       - build
+      - job3:
+          requires:
+            - build
 
 version: 2.1
 jobs:
@@ -37,12 +37,14 @@ jobs:
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn lint
     - run: yarn format:check
-  # job3:
-  #   docker:
-  #     - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
-  #       auth:
-  #         username: $AUTH_DOCKER
-  #         password: $PSW_DOCKER  # context / project UI env-var reference
-  #   steps:
-  #   - checkout
-  #   - run: yarn test:ci
+  job3:
+    docker:
+      - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
+        auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
+    steps:
+    - checkout
+    - restore_cache: 
+        key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+    - run: yarn test:ci
