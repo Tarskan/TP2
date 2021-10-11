@@ -12,6 +12,10 @@ workflows:
       - DATABASETest:
           requires:
            - build
+      - DATABASETest:
+          requires:
+           - job2
+           - job3
 
 version: 2.1
 jobs:
