@@ -11,8 +11,7 @@ workflows:
             - build
       - DATABASETest:
           requires:
-           - job2
-           - job3
+           - build
 
 version: 2.1
 jobs:
@@ -70,7 +69,7 @@ jobs:
 
   DATABASETest :
     - image: circleci/postgres:9.6-alpine
-        auth:
+      auth:
           username: $AUTH_DOCKER
           password: $PSW_DOCKER  # context / project UI env-var reference
         environment:
