@@ -1,5 +1,5 @@
 orbs:
-  node: circleci/node@14.10.1
+  node: circleci/node@4.7.0
 workflows:
   version: 2.1
   do-some-magic:
