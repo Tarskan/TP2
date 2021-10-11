@@ -95,5 +95,5 @@ jobs:
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn doc:build
     - store_artifacts:
-        path: ~/docs/
+        path: ~/docs
         destination: yarn-docs
