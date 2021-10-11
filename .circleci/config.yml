@@ -21,18 +21,6 @@ jobs:
         auth:
           username: $AUTH_DOCKER
           password: $PSW_DOCKER  # context / project UI env-var reference
-        environment:
-            POSTGRES_URL: postgres://psqluer:psqlpassword@localhost:5432/psdb
-
-      # Service container image
-
-      - image: circleci/postgres:9.6-alpine
-        auth:
-          username: $AUTH_DOCKER
-          password: $PSW_DOCKER  # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: test
           
     steps:
       - checkout # check out the code in the project directory
@@ -69,6 +57,13 @@ jobs:
 
   DATABASETest :
     docker:
+      - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
+        auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
+        environment:
+            POSTGRES_URL: postgres://root:psqlpassword@localhost:5432/test
+
       - image: circleci/postgres:9.6-alpine
         auth:
             username: $AUTH_DOCKER
