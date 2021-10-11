@@ -9,6 +9,10 @@ workflows:
       - job3:
           requires:
             - build
+      - DATABASETest:
+          requires:
+           - job2
+           - job3
 
 version: 2.1
 jobs:
@@ -38,6 +42,7 @@ jobs:
           key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
           paths: 
            - node_modules
+
   job2:
     docker:
       - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
@@ -50,6 +55,7 @@ jobs:
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn lint
     - run: yarn format:check
+
   job3:
     docker:
       - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
@@ -61,3 +67,17 @@ jobs:
     - restore_cache: 
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn test
+
+  DATABASETest :
+    - image: circleci/postgres:9.6-alpine
+        auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: test
+    steps:
+      - checkout
+      - restore_cache: 
+        key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn test:e2e
