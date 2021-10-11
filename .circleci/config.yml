@@ -72,7 +72,7 @@ jobs:
       auth:
           username: $AUTH_DOCKER
           password: $PSW_DOCKER  # context / project UI env-var reference
-        environment:
+      environment:
           POSTGRES_USER: root
           POSTGRES_DB: test
     steps:
