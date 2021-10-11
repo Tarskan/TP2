@@ -8,7 +8,7 @@ workflows:
             - build
       - job3:
           requires:
-            - build
+            - job2
       - DATABASETest:
           requires:
            - build
