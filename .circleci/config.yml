@@ -3,6 +3,12 @@ workflows:
   do-some-magic:
     jobs:
       - build
+      - job2:
+          requires:
+            - build
+      - job3:
+          requires:
+            - build
 
 version: 2.1
 jobs:
@@ -17,3 +23,10 @@ jobs:
       - run: yarn install
       - restore_cache: 
           key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+  job2:
+    steps:
+    - run: yarn lint
+    - run: yarn format:check
+  job3:
+    steps:
+    - run: yarn test:ci
