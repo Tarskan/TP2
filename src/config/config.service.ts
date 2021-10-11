@@ -37,8 +37,6 @@ export class ConfigService {
   private validateInput(envConfig: any): EnvConfig {
     const result = schema.safeParse(envConfig);
 
-    console.log(result);
-
     if (result.success === false) {
       throw new Error(`Config validation error: ${result.error.toString()}`);
     }

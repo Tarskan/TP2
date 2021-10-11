@@ -54,7 +54,8 @@ jobs:
     - restore_cache: 
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn test
-
+  
+  #ne fonctionne mais vu en cour c'est ce que l'on attandais
   DATABASETest :
     docker:
       - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
@@ -77,3 +78,19 @@ jobs:
     - restore_cache: 
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn test:e2e
+  
+  DOCJob:
+    docker:
+      - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
+        auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
+    steps:
+    - checkout
+    - restore_cache: 
+        key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+    - run: yarn doc:build
+    - store_artifacts:
+        path: 
+        - .yarn/docs
+        destination: yarn-docs
