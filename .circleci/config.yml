@@ -1,5 +1,3 @@
-orbs:
-  node: circleci/node@4.7.0
 workflows:
   version: 2.1
   do-some-magic:
@@ -16,7 +14,5 @@ jobs:
           password: $PSW_DOCKER  # context / project UI env-var reference
     steps:
       - checkout # check out the code in the project directory
-      - node/with-cache:
-          steps:
-            - run: yarn install
-            - run: npm-v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - run: npm-v1-dependencies-{{ checksum "yarn.lock" }}
