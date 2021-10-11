@@ -93,7 +93,6 @@ jobs:
     - checkout
     - restore_cache: 
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
-    - run: yarn doc
     - run: yarn doc:build
     - store_artifacts:
         path: ~/yarn/docs
