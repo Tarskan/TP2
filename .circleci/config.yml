@@ -12,7 +12,7 @@ workflows:
       - DATABASETest:
           requires:
            - build
-      - DATABASETest:
+      - DOCJob:
           requires:
            - job2
            - job3
