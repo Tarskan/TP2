@@ -62,6 +62,13 @@ jobs:
   #ne fonctionne mais vu en cour c'est ce que l'on attandais
   DATABASETest :
     docker:
+      - image: cimg/node:14.15.0 # the primary container, where your job's commands are run
+        auth:
+          username: $AUTH_DOCKER
+          password: $PSW_DOCKER  # context / project UI env-var reference
+        environment:
+            DATABASE_URL: postgres://root:test@localhost:5433/db
+
       - image: circleci/postgres:9.6.5-alpine-ram
         auth:
             username: $AUTH_DOCKER
@@ -70,7 +77,6 @@ jobs:
             POSTGRES_USER: root
             POSTGRES_DB: db
             POSTGRES_PASSWORD: test
-            DATABASE_URL: postgres://root:test@localhost:5432/db
     steps:
     - checkout
     - restore_cache: 
@@ -89,5 +95,5 @@ jobs:
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn doc:build
     - store_artifacts:
-        path: ~/project/docs/
+        path: ~/projects/docs/
         destination: yarn-docs
