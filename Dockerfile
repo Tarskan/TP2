@@ -3,10 +3,8 @@ LABEL maintainer="TP2"
 
 WORKDIR /app
 
-COPY package.json /app
+COPY . /app
 
 RUN yarn install
 
-COPY . /app
-
-RUN yarn start
+ENTRYPOINT [ "yarn", "start" ]
