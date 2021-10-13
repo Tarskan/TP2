@@ -67,7 +67,8 @@ jobs:
           username: $AUTH_DOCKER
           password: $PSW_DOCKER  # context / project UI env-var reference
         environment:
-            DATABASE_URL: postgres://root:test@localhost:5432/db
+            DATABASE_URL: postgres://root:test@postgre:5432/db
+        name: node
             
       - image: circleci/postgres:9.6.5-alpine-ram
         auth:
@@ -77,6 +78,7 @@ jobs:
             POSTGRES_USER: root
             POSTGRES_DB: db
             POSTGRES_PASSWORD: test
+        name: postgre
     steps:
     - checkout
     - restore_cache: 
@@ -95,5 +97,5 @@ jobs:
         key: npm-v1-dependencies-{{ checksum "yarn.lock" }}
     - run: yarn doc:build
     - store_artifacts:
-        path: ~/projects/docs/
+        path: ~/project/docs/
         destination: yarn-docs
